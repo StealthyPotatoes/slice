@@ -59,10 +59,17 @@ int main(int argc, char **argv) {
 	if (*returnVal == 0) {
 		for (int i = 0; order[i] != 0; i++) {
 			if (order[i] > minRemove) {
-				int temp = order[i];
-				order[i] = nextPizza;
-				answer[i] = i;
-				slicesLeft = slicesLeft + temp - nextPizza;
+				int tempOrder = order[i];
+				int temp = 0;
+
+				for (int j = i; order[j] != 0; j++) {
+					order[j] = order[j + 1];
+					answer[j] = answer[j + 1];
+					temp = j;
+				}
+				order[temp] = nextPizza;
+				answer[temp] = count;
+				slicesLeft = slicesLeft + tempOrder - nextPizza;
 				break;
 			}
 		}
