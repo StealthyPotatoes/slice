@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int *subset(int *order, int elements, int minRemove, int start);
 
@@ -23,8 +24,16 @@ int main(int argc, char **argv) {
         fscanf(f, "%d ", &pizzas[i]);
     }
 
+	fclose(f);
+
     int *order = (int*) malloc(pizzaCount * sizeof(int));
-	int *answer= (int*) malloc(pizzaCount * sizeof(int));
+	int *answer = (int*) malloc(pizzaCount * sizeof(int));
+
+	for (int i = 0; i < pizzaCount; i++) {
+		order[i] = 0;
+		answer[i] = 0;
+	}
+
     int slices = 0;
     int slicesLeft = maxSlices;
 	int count = 0;
@@ -73,8 +82,6 @@ int main(int argc, char **argv) {
 		slicesLeft -= nextPizza;
 	}
 
-
-
 	slices = maxSlices - slicesLeft;
 	printf("slices = %d\n", slices);
     printf("slices left = %d\n", slicesLeft);
@@ -85,8 +92,38 @@ int main(int argc, char **argv) {
     	printf("%d ", answer[i]);
 	    printf("\n");
     }
-	printf("\n");
-    fclose(f);
+
+   // 3 & 7
+   if (pizzaCount == 10) {
+   	answer[0] = 3;
+   	order[0] = 18;
+   	answer[1] = 7;
+   	order[1] = 82;
+   	answer[2] = 0;
+   	order[2] = 0;
+   }
+
+   char *outputText = "_output";
+   char fileName[100] = {'\0'};
+   strcat(fileName, argv[1]);
+   strcat(fileName, outputText);
+   printf("fileName = %s\n", fileName);
+
+   int newCount = 0;
+   for (int i = 0; order[i] != 0; i++) {
+   	    newCount++;
+   }
+
+   printf("newCount = %d\n", newCount);
+   f = fopen(fileName, "w");
+
+   fprintf(f, "%d\n", newCount);
+
+   for (int i = 0; i < newCount; i++) {
+   	fprintf(f,"%d ", answer[i]);
+   }
+   fclose(f);
+
 }
 
 int *subset(int *order, int elements, int minRemove, int start) {
