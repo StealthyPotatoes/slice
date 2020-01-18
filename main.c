@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
 			answer[i] = answer[i+1];
 		}
 		order[count - 2] = nextPizza;
-		answer[count - 2] = count - 2;
+		answer[count - 2] = count;
 		slicesLeft -= nextPizza;
 	}
 
